@@ -251,7 +251,6 @@ StringTokenizer st;
 void yyerror(String s){
 	huboError = true;
 	System.out.println("error:"+s);
-        System.exit(0);
 }
 
 boolean newline;
@@ -378,22 +377,40 @@ public void insertarInstrucciones(){
 	tablaDeSimbolos.insertar("COLOR", new MaquinaDePila.CambiarColor());
         tablaDeSimbolos.insertar("PenUP", new MaquinaDePila.SubirPincel());
         tablaDeSimbolos.insertar("PenDOWN", new MaquinaDePila.BajarPincel());
+	tablaDeSimbolos.insertar("Avanzar", new MaquinaDePila.Avanzar());
+tablaDeSimbolos.insertar("Girar",   new MaquinaDePila.Girar());
+tablaDeSimbolos.insertar("CambiarColor", new MaquinaDePila.CambiarColor());
 
 }
 
 
+public String quitarComentarios(String codigo){
+    StringBuilder limpio = new StringBuilder();
+    for(String linea : codigo.split("\n", -1)){
+        int idx = linea.indexOf("//");
+        limpio.append(idx >= 0 ? linea.substring(0, idx) : linea).append("\n");
+    }
+    return limpio.toString();
+}
+
+public String normalizarReturn(String codigo){
+    return codigo.replaceAll("return\\s*;", "return 0;");
+}
+
 public Configuracion ejecutarCodigo(String codigo){
-    st = new StringTokenizer(ajustarCadena(codigo));
+    st = new StringTokenizer(ajustarCadena(quitarComentarios(normalizarReturn(codigo))));
     newline=false;
+    huboError = false;
     yyparse();
     if(!huboError)
             maquina.ejecutar();
     return maquina.getConfiguracion();
-} 
+}
 
 public boolean compilar(String codigo){
-    st = new StringTokenizer(ajustarCadena(codigo));
+    st = new StringTokenizer(ajustarCadena(quitarComentarios(normalizarReturn(codigo))));
     newline=false;
+    huboError = false;
     yyparse();
     return !huboError;
 }

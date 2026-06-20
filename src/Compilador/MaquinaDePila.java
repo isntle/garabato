@@ -390,10 +390,11 @@ public class MaquinaDePila {
             double x1 = x0 + Math.cos(Math.toRadians(angulo))*(double)parametros.get(0);
             double y1 = y0 + Math.sin(Math.toRadians(angulo))*(double)parametros.get(0);
             configuracion.setPosicion(x1, y1);
-            configuracion.agregarLinea(new Linea((int)x0,(int)y0,(int)x1,(int)y1, configuracion.getColor()));
+            if(configuracion.isLapizAbajo())
+                configuracion.agregarLinea(new Linea((int)x0,(int)y0,(int)x1,(int)y1, configuracion.getColor()));
         }
     }
-    
+
     public static class CambiarColor implements Funcion{
         @Override
         public void ejecutar(Object A, ArrayList parametros) {
@@ -401,19 +402,19 @@ public class MaquinaDePila {
             configuracion.setColor(new Color((int)(double)parametros.get(0)%256, (int)(double)parametros.get(1)%256, (int)(double)parametros.get(2)%256));
         }
     }
-    
+
     public static class SubirPincel implements Funcion{
         @Override
         public void ejecutar(Object A, ArrayList parametros) {
             Configuracion configuracion = (Configuracion)A;
-            configuracion.setColor(Color.GRAY);
+            configuracion.setLapizAbajo(false);
         }
     }
     public static class BajarPincel implements Funcion{
         @Override
         public void ejecutar(Object A, ArrayList parametros) {
             Configuracion configuracion = (Configuracion)A;
-            configuracion.setColor(Color.BLACK);
+            configuracion.setLapizAbajo(true);
         }
     }
 }

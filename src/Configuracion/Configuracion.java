@@ -22,7 +22,8 @@ public class Configuracion {
     private double y;
     private int angulo;
     private Color color;
-    
+    private boolean lapizAbajo = true;
+
     public Configuracion(){
         x = 0.0;
         y = 0.0;
@@ -34,9 +35,11 @@ public class Configuracion {
     public double getY() { return y; }
     public int getAngulo() { return angulo; }
     public Color getColor() { return color; }
+    public boolean isLapizAbajo() { return lapizAbajo; }
 
     public void setAngulo(int angulo) { this.angulo = angulo; }
     public void setColor(Color color) { this.color = color; }
+    public void setLapizAbajo(boolean lapizAbajo) { this.lapizAbajo = lapizAbajo; }
 
     public void setPosicion(double x, double y) {
         this.x = x;

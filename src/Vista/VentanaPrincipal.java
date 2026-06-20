@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import Compilador.Parser;
+import Configuracion.Configuracion;
 
 public class VentanaPrincipal extends JFrame {
     private final JTextArea areaDeCodigo;
@@ -111,6 +112,8 @@ public class VentanaPrincipal extends JFrame {
         clr.addActionListener(event -> {
             parser.limpiar();
             areaDeCodigo.setText("");
+            panelDeDibujo.setConfiguracion(new Configuracion());
+            panelDeDibujo.repaint();
         });
         add(clr);
 
